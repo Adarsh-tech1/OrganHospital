@@ -10,6 +10,13 @@ const userSchema = new mongoose.Schema(
       enum: ["donor", "patient", "admin"],
       default: "patient",
     },
+    bloodType: {
+      type: String,
+      enum: ["O+", "O-", "A+", "A-", "B+", "B-", "AB+", "AB-"],
+      default: "O+",
+    },
+    age: Number,
+    medicalHistory: String,
   },
   { timestamps: true },
 );

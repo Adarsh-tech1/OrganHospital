@@ -42,3 +42,41 @@ export const login = async (req, res) => {
     res.status(500).json(err);
   }
 };
+
+// UPDATE PROFILE
+export const updateProfile = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, age, bloodType, medicalHistory } = req.body;
+
+    const updatedUser = await User.findByIdAndUpdate(
+      id,
+      { name, age, bloodType, medicalHistory },
+      { new: true },
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.json({ message: "Profile updated", user: updatedUser });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+// GET USER BY ID
+export const getUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id);
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.json(user);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
