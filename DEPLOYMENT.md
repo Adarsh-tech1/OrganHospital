@@ -12,6 +12,7 @@ Complete guide to deploy your Organ Hospital application on production servers.
 2. **Install Heroku CLI**: https://devcenter.heroku.com/articles/heroku-cli
 
 3. **Deploy Commands**:
+
 ```bash
 cd Organ-Backend
 
@@ -31,6 +32,7 @@ git push heroku main
 ```
 
 4. **View Live**:
+
 ```bash
 heroku open
 ```
@@ -50,6 +52,7 @@ Backend URL: `https://organ-hospital-backend.herokuapp.com`
    - Set environment variables
 
 3. **Environment Variables in Railway**:
+
 ```
 MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/organDB
 JWT_SECRET=your-secret-key-here
@@ -72,6 +75,7 @@ Backend URL will be auto-generated! 🎉
    - Add environment variables
 
 3. **Environment Variables**:
+
 ```
 MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/organDB
 JWT_SECRET=your-secret-key-here
@@ -82,6 +86,7 @@ JWT_SECRET=your-secret-key-here
 ### Option 4: Deploy on AWS (Scalable)
 
 1. **Using Elastic Beanstalk**:
+
 ```bash
 # Install EB CLI
 pip install awsebcli
@@ -139,6 +144,7 @@ Frontend URL: `https://organ-hospital.vercel.app`
      - Publish directory: `dist`
 
 3. **Environment Variables**:
+
 ```
 VITE_API_URL=https://your-backend-url.com/api
 ```
@@ -150,19 +156,22 @@ VITE_API_URL=https://your-backend-url.com/api
 ### Option 3: Deploy on GitHub Pages
 
 1. **Update vite.config.js**:
+
 ```javascript
 export default {
-  base: '/OrganHospital/',  // Your repo name
+  base: "/OrganHospital/", // Your repo name
   plugins: [react()],
-}
+};
 ```
 
 2. **Build**:
+
 ```bash
 npm run build
 ```
 
 3. **Deploy** - Push to GitHub:
+
 ```bash
 git add .
 git commit -m "Deploy to GitHub Pages"
@@ -212,6 +221,7 @@ Database: MongoDB Atlas (Cloud, Free tier available)
 ### **Step 1: Prepare Backend**
 
 1. Update `Organ-Backend/package.json`:
+
 ```json
 {
   "engines": {
@@ -221,6 +231,7 @@ Database: MongoDB Atlas (Cloud, Free tier available)
 ```
 
 2. Create `Procfile` in Organ-Backend:
+
 ```
 web: node server/server.js
 ```
@@ -228,11 +239,13 @@ web: node server/server.js
 ### **Step 2: Prepare Frontend**
 
 1. Create `Organ-Frontend/.env.production`:
+
 ```
 VITE_API_URL=https://your-deployed-backend-url/api
 ```
 
 2. Update `Organ-Frontend/src/services/api.js`:
+
 ```javascript
 const API = axios.create({
   baseURL: import.meta.env.VITE_API_URL || "http://localhost:5000/api",
@@ -242,6 +255,7 @@ const API = axios.create({
 ### **Step 3: Deploy Backend First**
 
 Choose one:
+
 - **Railway**: Easiest for beginners
 - **Heroku**: If you have account
 - **Render**: Good free tier
@@ -264,6 +278,7 @@ Choose one:
 ## **Environment Variables Checklist**
 
 ### **Backend Requirements**:
+
 ```
 ✅ MONGO_URI = Your MongoDB connection string
 ✅ JWT_SECRET = Secret key for JWT
@@ -271,6 +286,7 @@ Choose one:
 ```
 
 ### **Frontend Requirements**:
+
 ```
 ✅ VITE_API_URL = Your backend deployed URL
 ```
@@ -305,21 +321,27 @@ curl https://your-backend-url/api/donor
 ## **Troubleshooting**
 
 ### **Backend not responding**:
+
 - Check environment variables
 - Verify MongoDB connection
 - Check logs: `heroku logs --tail`
 
 ### **Frontend showing CORS errors**:
+
 - Backend must have CORS enabled
 - Update backend CORS settings:
+
 ```javascript
-app.use(cors({
-  origin: "https://your-frontend-url.com", 
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: "https://your-frontend-url.com",
+    credentials: true,
+  }),
+);
 ```
 
 ### **Frontend not connecting to backend**:
+
 - Check VITE_API_URL is set correctly
 - Check browser console for errors
 - Verify backend is accessible
@@ -328,12 +350,12 @@ app.use(cors({
 
 ## **Cost Breakdown (Approximate)**
 
-| Service | Free Tier | Paid Starting |
-|---------|-----------|---------------|
-| Vercel (Frontend) | ✅ Yes | $20/month |
-| Railway (Backend) | ✅ $5 credit | $5+/month |
-| MongoDB Atlas | ✅ Yes (512MB) | $57/month |
-| **Total** | **~$5-10/month** | **$82+/month** |
+| Service           | Free Tier        | Paid Starting  |
+| ----------------- | ---------------- | -------------- |
+| Vercel (Frontend) | ✅ Yes           | $20/month      |
+| Railway (Backend) | ✅ $5 credit     | $5+/month      |
+| MongoDB Atlas     | ✅ Yes (512MB)   | $57/month      |
+| **Total**         | **~$5-10/month** | **$82+/month** |
 
 ---
 
@@ -359,6 +381,7 @@ app.use(cors({
 ## **Recommended For You**
 
 **Best setup for Beginners**:
+
 1. **Backend**: Railway.app (5 min)
 2. **Frontend**: Vercel (2 min)
 3. **Database**: MongoDB Atlas (Free)

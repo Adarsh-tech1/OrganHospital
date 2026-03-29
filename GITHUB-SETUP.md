@@ -25,6 +25,7 @@ git push -u origin main
 ```
 
 ### Example:
+
 ```bash
 git remote add origin https://github.com/AdarshSingh/OrganHospital.git
 git branch -M main
@@ -36,6 +37,7 @@ git push -u origin main
 When you run `git push`, GitHub will ask for authentication:
 
 ### Option A: Using GitHub CLI (Recommended)
+
 ```bash
 # Install GitHub CLI from https://cli.github.com/
 gh auth login
@@ -43,6 +45,7 @@ gh auth login
 ```
 
 ### Option B: Using Personal Access Token
+
 1. Go to https://github.com/settings/tokens
 2. Click "Generate new token"
 3. Select scopes: `repo`, `workflow`
@@ -51,16 +54,19 @@ gh auth login
 6. When Git prompts for password, use the token
 
 ### Option C: SSH (Advanced)
+
 Follow GitHub's SSH setup guide: https://docs.github.com/en/authentication/connecting-to-github-with-ssh
 
 ## Step 4: Verify Upload
 
 After pushing successfully, visit:
+
 ```
 https://github.com/<YOUR_USERNAME>/<YOUR_REPO_NAME>
 ```
 
 You should see:
+
 - ✅ All project files
 - ✅ README.md with documentation
 - ✅ 2 commits in history
@@ -75,12 +81,14 @@ Status: Ready to push
 ```
 
 ### Existing Commits:
+
 - Initial commit: Organ Hospital donation platform
 - Add comprehensive README documentation
 
 ## 🔄 Future Pushes
 
 For future commits, simply use:
+
 ```bash
 git add .
 git commit -m "Your commit message"
@@ -107,15 +115,18 @@ git push
 ## 🆘 Troubleshooting
 
 ### If you get "remote already exists":
+
 ```bash
 git remote remove origin
 git remote add origin https://github.com/<YOUR_USERNAME>/<YOUR_REPO_NAME>.git
 ```
 
 ### If you get "permission denied":
+
 Make sure you're using correct authentication (token or SSH key)
 
 ### If you get "could not resolve host":
+
 Check your internet connection
 
 ---
