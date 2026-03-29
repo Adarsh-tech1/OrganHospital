@@ -1,0 +1,5 @@
+{
+  "builder": "dockerfile",
+  "buildCommand": "npm install",
+  "startCommand": "node server/server.js"
+}
