@@ -407,6 +407,22 @@ function Matches() {
                       ></span>
                       <span>Urgency Fit</span>
                     </div>
+                    <div className="flex items-center gap-2 text-sm col-span-2 pt-2 border-t border-gray-600 mt-1">
+                      <Sparkles className="w-4 h-4 text-blue-400" />
+                      <span>
+                        organprdict AI Score:{" "}
+                        <span className="font-bold text-blue-400">
+                          {match.compatibilityDetails?.mlScore || "N/A"}%
+                        </span>{" "}
+                        (Success Prob:{" "}
+                        <span className="font-bold text-purple-400">
+                          {match.compatibilityDetails?.aiSuccessProbability ||
+                            "N/A"}
+                          %
+                        </span>
+                        )
+                      </span>
+                    </div>
                   </div>
                 </div>
 
