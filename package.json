@@ -11,5 +11,9 @@
   },
   "devDependencies": {
     "concurrently": "^9.2.1"
+  },
+  "dependencies": {
+    "@tensorflow/tfjs-layers": "^4.22.0",
+    "@tensorflow/tfjs-node": "^4.22.0"
   }
 }

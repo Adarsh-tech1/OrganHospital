@@ -31,6 +31,8 @@ const matchSchema = new mongoose.Schema(
       organMatch: Boolean,
       locationProximity: Number, // 0-100 score
       urgencyFit: Boolean,
+      mlScore: Number,
+      aiSuccessProbability: Number,
     },
     status: {
       type: String,

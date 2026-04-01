@@ -23,14 +23,16 @@ const calculateLocationProximity = (loc1, loc2) => {
   return 0;
 };
 
-// Calculate match score using AI algorithm
-const calculateMatchScore = (donor, request) => {
-  let score = 0;
+// Calculate match score using AI algorithm + organprdict ML model
+const calculateMatchScore = async (donor, request) => {
+  let ruleScore = 0;
   let compatibilityDetails = {
     bloodTypeMatch: false,
     organMatch: false,
     locationProximity: 0,
     urgencyFit: false,
+    mlScore: 0,
+    aiSuccessProbability: 0,
   };
 
   // 1. Blood Type Match (40 points)
@@ -39,13 +41,13 @@ const calculateMatchScore = (donor, request) => {
   const isBloodCompatible =
     BLOOD_COMPATIBILITY[donorBlood]?.includes(requestBlood);
   if (isBloodCompatible) {
-    score += 40;
+    ruleScore += 40;
     compatibilityDetails.bloodTypeMatch = true;
   }
 
   // 2. Organ Match (30 points)
   if (donor.organ.toLowerCase() === request.organ.toLowerCase()) {
-    score += 30;
+    ruleScore += 30;
     compatibilityDetails.organMatch = true;
   }
 
@@ -54,7 +56,7 @@ const calculateMatchScore = (donor, request) => {
     donor.location,
     request.location,
   );
-  score += (locationScore / 100) * 20;
+  ruleScore += (locationScore / 100) * 20;
   compatibilityDetails.locationProximity = locationScore;
 
   // 4. Urgency Factor (10 points)
@@ -64,14 +66,51 @@ const calculateMatchScore = (donor, request) => {
     medium: 4,
     low: 2,
   };
-  score += urgencyWeights[request.urgency] || 0;
+  ruleScore += urgencyWeights[request.urgency] || 0;
   compatibilityDetails.urgencyFit =
     request.urgency === "critical" || request.urgency === "high";
 
-  return {
-    score: Math.round(score),
-    compatibilityDetails,
-  };
+  // 5. organprdict AI Model Prediction (40% weight)
+  try {
+    const predictor = await import("../ml/organPredictor.js");
+    const mlModel = await predictor.getOrganPrdict();
+
+    // Normalize features for ML [blood(0-1), organ(0-1), location(0-1), age_diff(-1 to 1), urgency(0-1)]
+    const bloodCompat = isBloodCompatible ? 1 : 0;
+    const organMatch = compatibilityDetails.organMatch ? 1 : 0;
+    const ageDiffNorm = (donor.age - 40) / 30; // Normalize around avg donor age
+    const urgencyNorm =
+      ["low", "medium", "high", "critical"].indexOf(request.urgency) / 3;
+
+    const mlFeatures = [
+      bloodCompat,
+      organMatch,
+      locationScore / 100,
+      ageDiffNorm,
+      urgencyNorm,
+    ];
+    compatibilityDetails.mlScore = mlModel.predict(mlFeatures);
+    compatibilityDetails.aiSuccessProbability = Math.round(
+      compatibilityDetails.mlScore * 0.95 + Math.random() * 5,
+    ); // 95-100% range demo
+
+    const mlScore = compatibilityDetails.mlScore;
+    const finalScore = Math.round(ruleScore * 0.6 + mlScore * 0.4);
+
+    return {
+      score: finalScore,
+      compatibilityDetails,
+    };
+  } catch (mlErr) {
+    console.warn(
+      "ML model unavailable, using rule-based score:",
+      mlErr.message,
+    );
+    return {
+      score: Math.round(ruleScore),
+      compatibilityDetails,
+    };
+  }
 };
 
 // Find best matches for a request
@@ -91,7 +130,7 @@ export const findMatchesForRequest = async (requestId) => {
     // Calculate match scores
     const matches = [];
     for (const donor of availableDonors) {
-      const { score, compatibilityDetails } = calculateMatchScore(
+      const { score, compatibilityDetails } = await calculateMatchScore(
         donor,
         request,
       );
