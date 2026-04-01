@@ -13,9 +13,6 @@ function CTA() {
       </div>
 
       <div className="max-w-5xl mx-auto w-full text-center relative z-10">
-        <div className="mb-6 flex justify-center">
-          <HiHeart className="w-20 h-20 text-white animate-pulse" />
-        </div>
         <h2 className="text-5xl font-bold text-white mb-4 leading-tight">
           Be Someone's Miracle
         </h2>
