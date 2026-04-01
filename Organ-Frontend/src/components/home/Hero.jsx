@@ -31,7 +31,7 @@ function Hero() {
       {/* Content */}
       <div className="relative z-10 flex flex-col justify-center items-center h-full text-center px-6">
         <h1 className="text-6xl md:text-7xl font-bold mb-4 text-white leading-tight drop-shadow-lg">
-          One Donor Can Save Lives
+          Right Organ Doesn't Reach The Right Patient on Time.
         </h1>
 
         <p className="text-xl md:text-2xl text-blue-100 max-w-2xl mb-2 drop-shadow-md">
@@ -45,17 +45,23 @@ function Hero() {
           {/* DONOR */}
           <button
             onClick={() => navigate("/register")}
-            className="backdrop-blur-lg bg-white/10 border border-white/20 text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-lg hover:shadow-green-400/40 hover:bg-green-500/20 transition-all duration-300 hover:-translate-y-1"
+            className="relative px-8 py-4 rounded-xl font-semibold text-lg text-white backdrop-blur-md bg-blue-500/20 border border-blue-300/30 overflow-hidden group transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_25px_rgba(59,130,246,0.6)]"
           >
-            Become a Donor
+            <span className="absolute inset-0 bg-gradient-to-r from-blue-400 to-blue-600 opacity-20 group-hover:opacity-40 transition"></span>
+            <span className="relative z-10 flex items-center justify-center gap-2">
+              Become a Donor
+            </span>
           </button>
 
           {/* REQUEST */}
           <button
             onClick={() => navigate("/request-organ")}
-            className="backdrop-blur-lg bg-white/10 border border-white/20 text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-lg hover:shadow-red-400/40 hover:bg-red-500/20 transition-all duration-300 hover:-translate-y-1"
+            className="relative px-8 py-4 rounded-xl font-semibold text-lg text-white backdrop-blur-md bg-blue-500/20 border border-blue-300/30 overflow-hidden group transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_25px_rgba(37,99,235,0.6)]"
           >
-            Request Organ
+            <span className="absolute inset-0 bg-gradient-to-r from-blue-500 to-blue-700 opacity-20 group-hover:opacity-40 transition"></span>
+            <span className="relative z-10 flex items-center justify-center gap-2">
+              Request Organ
+            </span>
           </button>
         </div>
 

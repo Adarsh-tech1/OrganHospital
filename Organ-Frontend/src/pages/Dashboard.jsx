@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
+import MatchSummary from "../components/MatchSummary";
 import API from "../services/api";
 
 function Dashboard() {
@@ -52,6 +53,11 @@ function Dashboard() {
             </p>
           </div>
         )}
+
+        {/* Match Summary Section - Prominent Display */}
+        <div className="mb-8">
+          <MatchSummary />
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Organ Requests Section */}
