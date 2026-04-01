@@ -28,7 +28,6 @@ function Hero() {
 
       {/* Content */}
       <div className="relative z-10 flex flex-col justify-center items-center h-full text-center px-6">
-        <div className="mb-6 text-7xl animate-bounce">❤️</div>
         <h1 className="text-6xl md:text-7xl font-bold mb-4 text-white leading-tight drop-shadow-lg">
           One Donor Can Save Lives
         </h1>

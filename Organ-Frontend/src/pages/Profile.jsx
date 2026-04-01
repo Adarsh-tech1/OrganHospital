@@ -25,7 +25,7 @@ function Profile() {
       setMessage("✅ Profile updated successfully!");
       setIsEditing(false);
       setTimeout(() => setMessage(""), 3000);
-    } catch (error) {
+    } catch {
       setMessage("❌ Error updating profile");
     }
   };

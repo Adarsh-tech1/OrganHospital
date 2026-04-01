@@ -51,7 +51,7 @@ function Register() {
         formData.role,
       );
       navigate("/login");
-    } catch (err) {
+    } catch {
       setLocalError(error || "Registration failed");
     }
   };
