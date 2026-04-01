@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Hero() {
   const [videoError, setVideoError] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div className="relative h-screen w-full overflow-hidden bg-gradient-to-br from-blue-900 via-blue-700 to-blue-500">
@@ -40,11 +42,19 @@ function Hero() {
         </p>
 
         <div className="flex flex-col md:flex-row gap-6 justify-center">
-          <button className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white px-8 py-4 rounded-lg font-bold text-lg shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-110">
+          {/* DONOR */}
+          <button
+            onClick={() => navigate("/register")}
+            className="backdrop-blur-lg bg-white/10 border border-white/20 text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-lg hover:shadow-green-400/40 hover:bg-green-500/20 transition-all duration-300 hover:-translate-y-1"
+          >
             Become a Donor
           </button>
 
-          <button className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-8 py-4 rounded-lg font-bold text-lg shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-110">
+          {/* REQUEST */}
+          <button
+            onClick={() => navigate("/request-organ")}
+            className="backdrop-blur-lg bg-white/10 border border-white/20 text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-lg hover:shadow-red-400/40 hover:bg-red-500/20 transition-all duration-300 hover:-translate-y-1"
+          >
             Request Organ
           </button>
         </div>

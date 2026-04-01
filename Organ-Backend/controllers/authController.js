@@ -19,7 +19,9 @@ export const register = async (req, res) => {
     }
 
     if (password.length < 6) {
-      return res.status(400).json({ message: "Password must be at least 6 characters" });
+      return res
+        .status(400)
+        .json({ message: "Password must be at least 6 characters" });
     }
 
     const hashed = await bcrypt.hash(password, 10);
@@ -44,7 +46,9 @@ export const login = async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.status(400).json({ message: "Email and password are required" });
+      return res
+        .status(400)
+        .json({ message: "Email and password are required" });
     }
 
     const user = await User.findOne({ email: email.toLowerCase() });
@@ -83,7 +87,9 @@ export const updateProfile = async (req, res) => {
     res.json({ message: "Profile updated successfully", user: updatedUser });
   } catch (err) {
     console.error("Update profile error:", err);
-    res.status(500).json({ message: err.message || "Failed to update profile" });
+    res
+      .status(500)
+      .json({ message: err.message || "Failed to update profile" });
   }
 };
 
@@ -94,11 +100,12 @@ export const getUser = async (req, res) => {
     const user = await User.findById(id);
 
     if (!user) {
-      return res.status(404).json({ error: "User not found" });
+      return res.status(404).json({ message: "User not found" });
     }
 
     res.json(user);
   } catch (err) {
-    res.status(500).json(err);
+    console.error("Get user error:", err);
+    res.status(500).json({ message: err.message || "Failed to fetch user" });
   }
 };

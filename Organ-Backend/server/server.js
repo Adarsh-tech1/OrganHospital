@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import authRoutes from "../routes/authRoutes.js";
 import donorRoutes from "../routes/donorRoutes.js";
 import requestRoutes from "../routes/requestRoutes.js";
+import matchRoutes from "../routes/matchRoutes.js";
 import connectDB from "./config/db.js";
 
 dotenv.config();
@@ -22,5 +23,6 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/donor", donorRoutes);
 app.use("/api/request", requestRoutes);
+app.use("/api/match", matchRoutes);
 
 app.listen(port, () => console.log(`Server running on ${port}`));

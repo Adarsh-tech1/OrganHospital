@@ -1,7 +1,9 @@
 import { createContext, useState, useCallback } from "react";
 import API from "../services/api.js";
 
-export const AuthContext = createContext();
+// Create the context
+const AuthContext = createContext();
+AuthContext.displayName = "AuthContext";
 
 export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
@@ -20,7 +22,7 @@ export default function AuthProvider({ children }) {
         password,
         role: role.toLowerCase(),
       });
-      setUser(res.data);
+      setUser(res.data.user);
       return res.data;
     } catch (err) {
       const errorMsg = err.response?.data?.message || "Registration failed";
@@ -81,3 +83,5 @@ export default function AuthProvider({ children }) {
     </AuthContext.Provider>
   );
 }
+
+export { AuthContext };
