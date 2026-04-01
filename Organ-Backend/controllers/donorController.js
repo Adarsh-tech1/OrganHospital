@@ -14,8 +14,16 @@ export const addDonor = async (req, res) => {
   }
 };
 
-// GET ALL DONORS
+// GET USER DONORS
+export const getUserDonors = async (req, res) => {
+  const donors = await Donor.find({ userId: req.params.userId }).populate(
+    "userId",
+  );
+  res.json(donors);
+};
+
+// GET ALL DONORS (admin/global)
 export const getDonors = async (req, res) => {
-  const donors = await Donor.find().populate("userId");
+  const donors = await Donor.find({ status: "available" }).populate("userId");
   res.json(donors);
 };

@@ -1,4 +1,4 @@
-import { createContext, useState, useCallback } from "react";
+import { createContext, useState, useCallback, useEffect } from "react";
 import API from "../services/api.js";
 
 // Create the context
@@ -8,8 +8,21 @@ AuthContext.displayName = "AuthContext";
 export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("token") || null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // Load user from localStorage on mount
+  useEffect(() => {
+    const savedUser = localStorage.getItem("user");
+    if (savedUser) {
+      try {
+        setUser(JSON.parse(savedUser));
+      } catch (e) {
+        localStorage.removeItem("user");
+      }
+    }
+    setLoading(false);
+  }, []);
 
   // Register
   const register = useCallback(async (name, email, password, role) => {
@@ -22,7 +35,9 @@ export default function AuthProvider({ children }) {
         password,
         role: role.toLowerCase(),
       });
-      setUser(res.data.user);
+      const { user: newUser } = res.data;
+      setUser(newUser);
+      localStorage.setItem("user", JSON.stringify(newUser));
       return res.data;
     } catch (err) {
       const errorMsg = err.response?.data?.message || "Registration failed";
@@ -65,23 +80,19 @@ export default function AuthProvider({ children }) {
   // Check if user is authenticated
   const isAuthenticated = !!token && !!user;
 
-  return (
-    <AuthContext.Provider
-      value={{
-        user,
-        setUser,
-        token,
-        loading,
-        error,
-        register,
-        login,
-        logout,
-        isAuthenticated,
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
+  const value = {
+    user,
+    setUser,
+    token,
+    loading,
+    error,
+    register,
+    login,
+    logout,
+    isAuthenticated,
+  };
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 export { AuthContext };
