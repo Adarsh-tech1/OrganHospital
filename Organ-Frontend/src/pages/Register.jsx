@@ -44,13 +44,17 @@ function Register() {
     }
 
     try {
-      await register(
+      const result = await register(
         formData.name,
         formData.email,
         formData.password,
         formData.role,
       );
-      navigate("/login");
+      if (result.token) {
+        navigate("/dashboard");
+      } else {
+        navigate("/login");
+      }
     } catch {
       setLocalError(error || "Registration failed");
     }

@@ -53,7 +53,22 @@ export const createRequest = async (req, res) => {
   }
 };
 
-// GET ALL REQUESTS
+// GET USER REQUESTS
+export const getUserRequests = async (req, res) => {
+  try {
+    const requests = await Request.find({ userId: req.params.userId })
+      .populate("userId")
+      .populate("matchedWith");
+    res.json(requests);
+  } catch (err) {
+    console.error("Get user requests error:", err);
+    res
+      .status(500)
+      .json({ message: err.message || "Failed to fetch requests" });
+  }
+};
+
+// GET ALL REQUESTS (admin)
 export const getRequests = async (req, res) => {
   try {
     const requests = await Request.find()
